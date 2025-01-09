@@ -1,1 +1,50 @@
-<p>user-list works!</p>
+
+        <!-- Afficher tous les utilisateurs -->
+        <h2>Liste des utilisateurs</h2>
+        <button (click)="getAll()">Afficher tous les utilisateurs</button>
+      
+        <ul>
+          <li *ngFor="let user of users">
+            {{ user.firstname }} {{ user.lastname }}
+          </li>
+        </ul>
+
+        <!-- Afficher un utilisateur -->
+        <h2>Chercher un utilisateur</h2>
+        <div>
+            <p>Entrez l'id de l'utilisateur :</p>
+            <input [(ngModel)]="userId" type="number" />
+            <button (click)="getOne()">Afficher l'utilisateur</button>
+            <div *ngIf="userDetails">
+                <p>{{ userDetails.firstname }} {{ userDetails.lastname }}</p>
+              </div>
+          </div>
+
+
+        <!-- Ajouter un utilisateur -->
+        <div>
+            <h2>Ajouter un nouvel utilisateur</h2>
+            <p>Prénom :</p>
+            <input [(ngModel)]="newUser.firstname" type="text" />
+            <p>Nom :</p>
+            <input [(ngModel)]="newUser.lastname" type="text" />
+            <button (click)="createUser()">Ajouter l'utilisateur</button>
+        </div>
+
+        <!-- Modifier un utilisateur -->
+        <div>
+            <h2>Modifier un utilisateur</h2>
+            <p>Entrez l'id de l'utilisateur à modifier :</p>
+            <input [(ngModel)]="userIdEdit" type="number" />
+            <p>Nouveau prénom :</p>
+            <input [(ngModel)]="editUser.firstname" type="text" />
+            <p>Nouveau nom :</p>
+            <input [(ngModel)]="editUser.lastname" type="text" />
+            <button (click)="updateUser()">Modifier l'utilisateur</button>
+
+        <!-- Supprimer un utilisateur -->
+        <div>
+            <h2>Supprimer un utilisateur</h2>
+            <p>Entrez l'id de l'utilisateur à supprimer :</p>
+            <input [(ngModel)]="userIdDelete" type="number" />
+            <button (click)="deleteUser()">Supprimer l'utilisateur</button>
