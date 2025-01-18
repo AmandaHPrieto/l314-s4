@@ -1,50 +1,64 @@
-
-        <!-- Afficher tous les utilisateurs -->
-        <h2>Liste des utilisateurs</h2>
-        <button (click)="getAll()">Afficher tous les utilisateurs</button>
-      
-        <ul>
-          <li *ngFor="let user of users">
-            {{ user.firstname }} {{ user.lastname }}
-          </li>
-        </ul>
-
-        <!-- Afficher un utilisateur -->
-        <h2>Chercher un utilisateur</h2>
-        <div>
-            <p>Entrez l'id de l'utilisateur :</p>
-            <input [(ngModel)]="userId" type="number" />
-            <button (click)="getOne()">Afficher l'utilisateur</button>
-            <div *ngIf="userDetails">
-                <p>{{ userDetails.firstname }} {{ userDetails.lastname }}</p>
-              </div>
-          </div>
+<!-- Recherche d'un utilisateur -->
+<div class="search-bar">
+  <input 
+    [(ngModel)]="userId" 
+    type="number" 
+    class="styled-input" 
+    placeholder="Enter user ID"
+  />
+  <button (click)="getOne()" class="intro__button unbutton">Rechercher</button>
+  <!-- Bouton Ajouter -->
+<button *ngIf="!userDetails" (click)="showAddUserForm()" class="intro__button unbutton">+</button>
+</div>
 
 
-        <!-- Ajouter un utilisateur -->
-        <div>
-            <h2>Ajouter un nouvel utilisateur</h2>
-            <p>Prénom :</p>
-            <input [(ngModel)]="newUser.firstname" type="text" />
-            <p>Nom :</p>
-            <input [(ngModel)]="newUser.lastname" type="text" />
-            <button (click)="createUser()">Ajouter l'utilisateur</button>
-        </div>
 
-        <!-- Modifier un utilisateur -->
-        <div>
-            <h2>Modifier un utilisateur</h2>
-            <p>Entrez l'id de l'utilisateur à modifier :</p>
-            <input [(ngModel)]="userIdEdit" type="number" />
-            <p>Nouveau prénom :</p>
-            <input [(ngModel)]="editUser.firstname" type="text" />
-            <p>Nouveau nom :</p>
-            <input [(ngModel)]="editUser.lastname" type="text" />
-            <button (click)="updateUser()">Modifier l'utilisateur</button>
+  <!-- Formulaire pour ajouter un utilisateur -->
+  <div *ngIf="isAddUserVisible">
+    <form class="search-bar" (ngSubmit)="createUser()">
+      <input class="styled-input" [(ngModel)]="newUser.firstname" type="text" placeholder="Prénom" required />
+      <input class="styled-input" [(ngModel)]="newUser.lastname" type="text" placeholder="Nom" required />
+      <input class="styled-input" [(ngModel)]="newUser.pic" type="text" placeholder="URL de la photo" />
+      <button type="submit" class="intro__button unbutton">Ajouter</button>
+    </form>
+  </div>
 
-        <!-- Supprimer un utilisateur -->
-        <div>
-            <h2>Supprimer un utilisateur</h2>
-            <p>Entrez l'id de l'utilisateur à supprimer :</p>
-            <input [(ngModel)]="userIdDelete" type="number" />
-            <button (click)="deleteUser()">Supprimer l'utilisateur</button>
+<!-- Afficher l'utilisateur recherché -->
+<div class="content center" *ngIf="userDetails">
+  <app-user-item [user]="userDetails"></app-user-item>
+
+  <!-- Modifier un utilisateur -->
+  <div class="search-bar">
+    <input class="styled-input" [(ngModel)]="userDetails.firstname" type="text" placeholder="Nouveau prénom"/>
+    <input class="styled-input" [(ngModel)]="userDetails.lastname" type="text" placeholder="Nouveau nom"/>
+    <button (click)="updateUser()" class="intro__button unbutton">Modifier</button>
+  </div>
+
+  <!-- Supprimer un utilisateur -->
+  <div class="padding-bottom">
+    <button (click)="deleteUser()" class="intro__button unbutton">Supprimer</button>
+  </div>
+</div>
+
+<!-- Afficher tous les utilisateurs uniquement si aucune recherche n'a été effectuée -->
+<div class="content" *ngIf="!userDetails">
+  <app-user-item *ngFor="let user of users" [user]="user"></app-user-item>
+</div>
+
+
+
+
+<!-- Ajouter un utilisateur 
+<div>
+  <h2>Ajouter un nouvel utilisateur</h2>
+  <p>Prénom :</p>
+  <input [(ngModel)]="newUser.firstname" type="text" />
+  <p>Nom :</p>
+  <input [(ngModel)]="newUser.lastname" type="text" />
+  <button (click)="createUser()">Ajouter l'utilisateur</button>
+</div>
+-->
+
+
+
+

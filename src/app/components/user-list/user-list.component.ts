@@ -4,9 +4,8 @@ import { UsersService } from '../../services/users.service';
 @Component({
   selector: 'app-user-list',
   standalone: false,
-
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent {
   users: any[] = [];
@@ -16,6 +15,7 @@ export class UserListComponent {
   editUser: any = {};
   userIdEdit: number = 1;
   userIdDelete: number = 1;
+  isAddUserVisible: boolean = false;  // Ajout de cette propriété
   // J'aurai peut-être dû faire un composant par action, pour mieux séparer le code
 
   constructor(private usersService: UsersService) { }
@@ -33,6 +33,11 @@ export class UserListComponent {
     );
   }
 
+  // Appel de la méthode getAll() dès que le composant est chargé
+  ngOnInit(): void {
+    this.getAll();
+  }
+
   // Récupérer un utilisateur par ID
   getOne() {
     this.usersService.getUserById(this.userId).subscribe(
@@ -46,12 +51,19 @@ export class UserListComponent {
     );
   }
 
+  // Afficher le formulaire d'ajout d'un utilisateur
+  showAddUserForm() {
+    this.isAddUserVisible = true;
+  }
+
   // Ajouter un utilisateur
   createUser() {
     this.usersService.createUser(this.newUser).subscribe(
       (data) => {
         console.log("Utilisateur ajouté", data);
         alert("Utilisateur ajouté");
+        this.isAddUserVisible = false;  // Cacher le formulaire après ajout
+        this.getAll();  // Mettre à jour la liste des utilisateurs
       },
       error => {
         console.log(error);
