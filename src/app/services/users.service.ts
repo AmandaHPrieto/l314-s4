@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UsersService {
 
-  private apiUrl = 'https://l314s2-production.up.railway.app/';  // Backend
+  private apiUrl = 'http://localhost:3000/users';  // Backend
 
   constructor(private http: HttpClient) {}
 
