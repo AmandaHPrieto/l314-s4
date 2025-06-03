@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UsersService {
 
-  private apiUrl = 'http://localhost:3000/users';  // Backend
+  private apiUrl = 'http://people.amandahp.fr/users';  // Backend
 
   constructor(private http: HttpClient) {}
 
